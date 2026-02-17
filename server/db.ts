@@ -178,7 +178,7 @@ function rowToEvent(row: Record<string, unknown>): StoredEvent {
 
 export function getHistory(db: Database, params: HistoryParams): { events: StoredEvent[]; total: number } {
   const conditions: string[] = [];
-  const values: unknown[] = [];
+  const values: (string | number | null)[] = [];
 
   if (params.source_app) {
     conditions.push("source_app = ?");
