@@ -86,7 +86,7 @@ console.log("\n=== Test 2: Correlation Fields ===");
 // ==========================================
 console.log("\n=== Test 3: Agent SDK ===");
 {
-  const { ObservabilitySDK } = await import("./server/agent-sdk");
+  const { ObservabilitySDK } = await import("../server/agent-sdk");
   const sdk = new ObservabilitySDK({
     sourceApp: "sdk-test",
     sessionId: "sdk-session",
