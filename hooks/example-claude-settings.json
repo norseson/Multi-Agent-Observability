@@ -1,0 +1,48 @@
+{
+  "name": "My Project with Observability",
+  "description": "Project configured to send events to the observability dashboard",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun \"/path/to/claudeobserv/hooks/send_event.ts\"",
+            "async": true,
+            "timeout": 5,
+            "description": "Send tool usage to observability dashboard"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun \"/path/to/claudeobserv/hooks/send_event.ts\"",
+            "async": true,
+            "timeout": 5,
+            "description": "Log tool completion to observability dashboard"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun \"/path/to/claudeobserv/hooks/send_event.ts\"",
+            "async": true,
+            "timeout": 5,
+            "description": "Log notifications to observability dashboard"
+          }
+        ]
+      }
+    ]
+  }
+}

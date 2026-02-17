@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-noir-950;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-noir-700 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-600;
+  }
+}
+
+@layer components {
+  .glow-cyan {
+    box-shadow: 0 0 8px rgba(34, 211, 238, 0.4), 0 0 16px rgba(34, 211, 238, 0.1);
+  }
+
+  .glow-green {
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  }
+
+  .glow-dot {
+    box-shadow: 0 0 6px currentColor;
+  }
+}

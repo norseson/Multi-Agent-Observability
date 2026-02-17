@@ -1,0 +1,22 @@
+{
+  "name": "multi-agent-observability",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Real-time observability dashboard for monitoring Claude Code agent activity",
+  "license": "MIT",
+  "engines": {
+    "bun": ">=1.0.0"
+  },
+  "scripts": {
+    "dev": "concurrently \"bun run dev:server\" \"bun run dev:client\"",
+    "dev:server": "bun --watch server/server.ts",
+    "dev:client": "cd client && bun run dev",
+    "build": "cd client && bun run build",
+    "start": "bun server/server.ts",
+    "setup": "bun install && cd client && bun install",
+    "test": "bun run tests/test-verification.ts"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
