@@ -1,5 +1,6 @@
 # Multi-Agent Observability Dashboard
 
+[![CI](https://github.com/norseson/Multi-Agent-Observability/actions/workflows/ci.yml/badge.svg)](https://github.com/norseson/Multi-Agent-Observability/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Bun](https://img.shields.io/badge/runtime-Bun-f9f1e1.svg)](https://bun.sh)
 [![Vue 3](https://img.shields.io/badge/frontend-Vue%203-4FC08D.svg)](https://vuejs.org)
