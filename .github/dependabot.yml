@@ -27,6 +27,18 @@ updates:
       - "frontend"
     commit-message:
       prefix: "deps(client)"
+    # Only allow minor/patch updates for core framework packages.
+    # Major version upgrades (Vite 7, Tailwind 4, etc.) require dedicated
+    # migration work and should be done as planned tasks, not auto-PRs.
+    ignore:
+      - dependency-name: "vite"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "vue-tsc"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@vitejs/plugin-vue"
+        update-types: ["version-update:semver-major"]
 
   # GitHub Actions
   - package-ecosystem: "github-actions"
