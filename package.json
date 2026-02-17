@@ -17,6 +17,7 @@
     "test": "bun run tests/test-verification.ts"
   },
   "devDependencies": {
+    "bun-types": "^1.3.9",
     "concurrently": "^9.1.0"
   }
 }

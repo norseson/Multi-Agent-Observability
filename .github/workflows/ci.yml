@@ -67,8 +67,8 @@ jobs:
 
       - name: Smoke test — GET history
         run: |
-          RESPONSE=$(curl -sf http://localhost:4000/api/history?source_app=ci&limit=1)
-          echo "$RESPONSE" | bun x json-parse 2>/dev/null || echo "$RESPONSE"
+          RESPONSE=$(curl -sf "http://localhost:4000/api/history?source_app=ci&limit=1")
+          echo "$RESPONSE"
           echo "$RESPONSE" | grep -q "ci-test" && echo "Event found in history" || (echo "Event not found" && exit 1)
 
       - name: Smoke test — GET filters
