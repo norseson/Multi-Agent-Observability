@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install root dependencies
+        run: bun install
+
+      - name: Install client dependencies
+        run: cd client && bun install
+
+      - name: TypeScript check (server)
+        run: bun x tsc --noEmit --project tsconfig.json
+
+      - name: Build client (Vue + Vite)
+        run: bun run build
+
+      - name: Start server (background)
+        run: bun run start &
+        env:
+          PORT: 4000
+
+      - name: Wait for server
+        run: |
+          for i in $(seq 1 15); do
+            if curl -sf http://localhost:4000/api/filters > /dev/null 2>&1; then
+              echo "Server is ready"
+              exit 0
+            fi
+            echo "Waiting for server... ($i/15)"
+            sleep 1
+          done
+          echo "Server failed to start"
+          exit 1
+
+      - name: Run verification tests
+        run: bun run test
+
+      - name: Smoke test — POST event
+        run: |
+          STATUS=$(curl -sf -o /dev/null -w "%{http_code}" \
+            -X POST http://localhost:4000/api/events \
+            -H "Content-Type: application/json" \
+            -d '{"source_app":"ci","session_id":"ci-test","event_type":"PreToolUse","tool_name":"Bash","summary":"CI smoke test"}')
+          if [ "$STATUS" != "201" ]; then
+            echo "Expected 201, got $STATUS"
+            exit 1
+          fi
+          echo "POST /api/events returned 201"
+
+      - name: Smoke test — GET history
+        run: |
+          RESPONSE=$(curl -sf http://localhost:4000/api/history?source_app=ci&limit=1)
+          echo "$RESPONSE" | bun x json-parse 2>/dev/null || echo "$RESPONSE"
+          echo "$RESPONSE" | grep -q "ci-test" && echo "Event found in history" || (echo "Event not found" && exit 1)
+
+      - name: Smoke test — GET filters
+        run: |
+          RESPONSE=$(curl -sf http://localhost:4000/api/filters)
+          echo "$RESPONSE" | grep -q "source_apps" && echo "Filters endpoint OK" || (echo "Filters missing" && exit 1)
